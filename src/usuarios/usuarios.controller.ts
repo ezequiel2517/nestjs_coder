@@ -14,7 +14,7 @@ export class UsuariosController {
   root() {
 
   }
-  
+
   @Post("/signup")
   @UseInterceptors(FileInterceptor("image", {
     storage: diskStorage({
@@ -28,11 +28,14 @@ export class UsuariosController {
   }))
 
   async signup(
-    @UploadedFile() image: Express.Multer.File, 
-    @Body() createUsuarioDto : CreateUsuarioDto,
+    @UploadedFile() image: Express.Multer.File,
+    @Body() createUsuarioDto: CreateUsuarioDto,
     @Response() res
-    ) {
-    const usuario : CreateUsuarioDto = await this.usuariosService.create(createUsuarioDto);
+  ) {
+    const usuarioExiste = await this.usuariosService.buscarUsuario(createUsuarioDto.username);
+    if (usuarioExiste)
+      return res.render("signup-error");
+    const usuario: CreateUsuarioDto = await this.usuariosService.crearUsuario(createUsuarioDto);
     usuario && res.redirect("login");
   }
 

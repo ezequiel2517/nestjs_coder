@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
   );
-  app.useStaticAssets(resolve('./src/public'));
+  app.useStaticAssets(resolve('./public'));
   app.setBaseViewsDir(resolve('./src/views'));
   app.setViewEngine('ejs');
   app.useGlobalPipes(new ValidationPipe());
@@ -24,7 +24,5 @@ async function bootstrap() {
   app.use(passport.initialize())
   app.use(passport.session())
   await app.listen(3000);
-
-
 }
 bootstrap();

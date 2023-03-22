@@ -22,7 +22,7 @@
         </h1>
     </div>
     <div class="d-flex justify-content-between row mx-4">
-        <a class="btn btn-success w-auto" href="/carrito">IR AL CARRITO</a>
+        <a class="btn btn-success w-auto" href="/compras">IR AL CARRITO</a>
         <a class="btn btn-danger w-auto" href="/logout">LOGOUT</a>
     </div>
     <hr>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="mb-1">
                         <label for="edad" class="form-label"> Edad </label>
-                        <input type="text" class="form-control" id="edad" name="edad" required="required">
+                        <input type="number" class="form-control" id="edad" name="edad" required="required">
                     </div>
                     <div class="mb-1">
                         <label for="alias" class="form-label"> Alias </label>
@@ -244,19 +244,9 @@
                 },
                 body: JSON.stringify(
                     {
-                        query: `
-                    mutation{
-                        saveCompra(compra: {
-                            title: "${title}"
-                            price: ${price}
-                            username: "<%= usuario %>"
-                        }), {
-                            title
-                            price
-                            username
-                        }
-                    }
-                `
+                        title,
+                        price,
+                        username: "<%= usuario %>"
                     })
             })
                 .then((response) => response.json())

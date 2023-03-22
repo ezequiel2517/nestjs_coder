@@ -9,16 +9,15 @@ import { Model } from "mongoose";
 export class UsuariosService {
   constructor(@InjectModel(Usuario.name) private usuarioModel: Model<UsuarioDocument>) { }
 
-  async create(createUsuarioDto: CreateUsuarioDto) {
+  async crearUsuario(createUsuarioDto: CreateUsuarioDto) {
     const hashedPassword = await bcrypt.hash(createUsuarioDto.password, 8);
     createUsuarioDto.password = hashedPassword;
     const itemCreated = await this.usuarioModel.create(createUsuarioDto);
     return itemCreated;
   }
 
-  async findOne(username: string) {
-    const usuario = await this.usuarioModel.findOne({ username: username });
-    return usuario;
+  async buscarUsuario(username: string) : Promise<CreateUsuarioDto> {
+    return await this.usuarioModel.findOne({ username: username });
   }
 
 }

@@ -7,7 +7,7 @@ export class AuthService {
     constructor(private readonly usuariosService: UsuariosService) { }
 
     async validateUser(username: string, password: string): Promise<any> {
-        const user = await this.usuariosService.findOne(username);
+        const user = await this.usuariosService.buscarUsuario(username);
         if (!user) {
             throw new NotAcceptableException('could not find the user');
         }

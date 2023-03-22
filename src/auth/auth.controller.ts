@@ -19,13 +19,6 @@ export class AuthController {
     return res.redirect("/home");
   }
 
-  @Get('/login-error')
-  loginError(@Request() req : any, @Response() res: any) { 
-    if (!req.isAuthenticated()) 
-      return res.render("login-error");
-    return res.redirect("/login");
-  }
-
   @Get('/logout')
   logout(@Request() req: any, @Response() res: any): any {
     req.session.destroy();

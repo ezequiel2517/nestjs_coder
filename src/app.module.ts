@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { MensajesModule } from './mensajes/mensajes.module';
 import { AuthMiddleware } from './auth/auth.middleware';
 import { AppMidleware } from './app.middleware';
+import { ComprasModule } from './compras/compras.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { AppMidleware } from './app.middleware';
     InfoModule,
     UsuariosModule,
     AuthModule,
-    MensajesModule
+    MensajesModule,
+    ComprasModule
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -26,11 +28,11 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .exclude("/login")
+      .exclude("/login", "/signup")
       .forRoutes('*')
 
       .apply(AppMidleware)
-      .exclude("/login", "/login-error", "/home", "/info", "/logout", "/signup", "/signup-error", "/productos")
+      .exclude("/login", "/home", "/info", "/logout", "/signup", "/signup-error", "/productos", "/compras")
       .forRoutes("*")
   }
 }

@@ -12,7 +12,7 @@ export class AuthGuardLocal extends AuthGuard("local") {
             return result;
         }
         catch (err) {
-            return context.switchToHttp().getResponse().redirect("login-error");
+            return context.switchToHttp().getResponse().render("login-error");
         }
     }
 }
