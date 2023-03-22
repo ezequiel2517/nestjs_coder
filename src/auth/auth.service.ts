@@ -1,21 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import * as bcrypt from "bcrypt";
-import { CreateUsuarioDto } from 'src/usuarios/dto/create-usuario.dto';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly usuariosService: UsuariosService) {
-    }
+    constructor(private readonly usuariosService: UsuariosService) { }
 
-    async validarUsuario(username: string, password: string): Promise<any> {
-        let usuario: CreateUsuarioDto = await this.usuariosService.findOne(username);
-        let res : boolean = false;
-        if (usuario) {
-            res = await bcrypt.compare(password, usuario.password);   
+    async validateUser(username: string, password: string): Promise<any> {
+        const user = await this.usuariosService.findOne(username);
+        if (!user) {
+            throw new NotAcceptableException('could not find the user');
         }
-        if(!res)
-            usuario = null;
-        return usuario;
+        const passwordValida = await bcrypt.compare(password, user.password);
+        if (user && passwordValida) {
+            return user
+        }
+        return null;
     }
 }

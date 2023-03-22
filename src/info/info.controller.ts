@@ -1,13 +1,15 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Render, Request, Response } from '@nestjs/common';
 import { InfoService } from './info.service';
 
 @Controller('info')
 export class InfoController {
-  constructor(private readonly infoService: InfoService) {}
+  constructor(private readonly infoService: InfoService) { }
 
   @Get()
-  @Render("info")
-  root(){
-    return this.infoService.getInfo() ;
-  } 
+  info(@Request() req, @Response() res) {
+    if (req.isAuthenticated())
+      return res.render("info", this.infoService.getInfo())
+
+    res.redirect("login")
+  }
 }

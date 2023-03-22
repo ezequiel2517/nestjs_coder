@@ -1,21 +1,36 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductosModule } from './productos/productos.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { InfoModule } from './info/info.module';
-import { AuthModule } from './auth/auth.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
+import { AuthModule } from './auth/auth.module';
+import { MensajesModule } from './mensajes/mensajes.module';
+import { AuthMiddleware } from './auth/auth.middleware';
+import { AppMidleware } from './app.middleware';
 
 @Module({
   imports: [
     MongooseModule.forRoot("mongodb+srv://ezequiel:ezequiel@cluster0.v5hpbf0.mongodb.net/ecommerce?retryWrites=true&w=majority"),
     ProductosModule,
     InfoModule,
+    UsuariosModule,
     AuthModule,
-    UsuariosModule
+    MensajesModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude("login")
+      .forRoutes('*')
+
+      .apply(AppMidleware)
+      .exclude("login", "home", "info", "signup", "login-error", "signup-error", "logout")
+      .forRoutes('*')
+  }
+}

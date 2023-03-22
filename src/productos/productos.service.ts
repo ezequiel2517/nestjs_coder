@@ -13,11 +13,10 @@ export class ProductosService {
   async create(createProductoDto: CreateProductoDto) {
     const itemCreated = await this.productoModel.create(createProductoDto);
     return itemCreated
-    //return 'This action adds a new producto';
   }
 
-  findAll() {
-    return `This action returns all productos`;
+  async findAll() {
+    return await this.productoModel.find();
   }
 
   findOne(id: number) {
