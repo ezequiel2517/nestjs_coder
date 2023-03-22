@@ -15,7 +15,7 @@ export class ProductosService {
     return itemCreated
   }
 
-  async findAll() {
+  async findAll() : Promise<CreateProductoDto[]> {
     return await this.productoModel.find();
   }
 

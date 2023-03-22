@@ -13,8 +13,8 @@ export class ProductosController {
   }
 
   @Get()
-  findAll() {
-    return this.productosService.findAll();
+  async findAll() : Promise<CreateProductoDto[]> {
+    return await this.productosService.findAll();
   }
 
   @Get(':id')

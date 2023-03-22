@@ -270,7 +270,7 @@
             }
         })
             .then((response) => response.json())
-            .then((json) => console.log(json.forEach(producto => renderProducto(producto))));
+            .then((json) => json.forEach(producto => renderProducto(producto)));
 
         socket.on("nuevo_cliente", (chat) => {
             chat.forEach(mensaje => {

@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 export class AppMidleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
         if (!req.isAuthenticated())
-            return res.redirect("login");
-        return res.redirect("home");
+            return res.redirect("/login");
+        return res.redirect("/home");
     }
 }
