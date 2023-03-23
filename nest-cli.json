@@ -3,7 +3,17 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true,
-    "assets": ["../env", "../public"]
+    "assets": [
+      {
+        "include": "../env",
+        "outDir": "dist/env",
+        "watchAssets": true
+      },
+      {
+        "include": "../public",
+        "outDir": "dist/public",
+        "watchAssets": true
+      }
+    ]
   }
 }
