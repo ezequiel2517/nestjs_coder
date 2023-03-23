@@ -21,7 +21,10 @@ export class AuthController {
 
   @Get('/logout')
   logout(@Request() req: any, @Response() res: any): any {
-    req.session.destroy();
-    return res.render("logout", { usuario: req.user.username });
+    if (req.isAuthenticated())  {
+      req.session.destroy();
+      return res.render("logout", { usuario: req.user.username });
+    }
+    return res.redirect("/login");
   }
 }

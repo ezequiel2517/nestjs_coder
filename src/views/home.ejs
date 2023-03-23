@@ -237,7 +237,7 @@
             const title = event.target.parentElement.parentElement.firstChild.innerText;
             const price = event.target.parentElement.parentElement.children[1].innerText;
 
-            fetch("/compras", {
+            fetch("compras/crear-compra", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -44,7 +44,7 @@
 <script>
   const buttonComprar = document.querySelector("#comprar");
   buttonComprar.addEventListener("click", (event) => {
-    fetch("/carrito", {
+    fetch("compras/finalizar-compra", {
       method: "POST",
       headers: {
         "Content-type": "application/json; charset=UTF-8"
@@ -52,6 +52,7 @@
     })
       .then((response) => response.json())
       .then((json) => {
+        console.log(json);
         const button = event.target;
         button.classList.remove("btn-success");
         button.classList.add("btn-secondary");

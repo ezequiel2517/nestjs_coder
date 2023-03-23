@@ -3,9 +3,8 @@ import { AuthService } from './auth.service';
 import { UsuariosModule } from 'src/usuarios/usuarios.module';
 import { AuthStrategy } from './auth.strategy';
 import { PassportModule } from '@nestjs/passport/dist';
-import { AuthUtilSessionSerialize } from './auth.util.sessionSerialize';
+import { AuthUtilSessionSerialize } from './utils/session_serialize';
 import { AuthController } from './auth.controller';
-import { AuthMiddleware } from './auth.middleware';
 
 @Module({
   imports: [UsuariosModule, PassportModule.register({ session: true })],

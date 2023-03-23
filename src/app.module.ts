@@ -8,21 +8,37 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { AuthModule } from './auth/auth.module';
 import { MensajesModule } from './mensajes/mensajes.module';
 import { AuthMiddleware } from './auth/auth.middleware';
-import { AppMidleware } from './app.middleware';
 import { ComprasModule } from './compras/compras.module';
+import { AlertasService } from './alertas/alertas.service';
+import { AlertasModule } from './alertas/alertas.module';
+import { ConfigModule } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
+import { NotFoundExceptionFilter } from 'src/app.exceptions';
 
 @Module({
   imports: [
-    MongooseModule.forRoot("mongodb+srv://ezequiel:ezequiel@cluster0.v5hpbf0.mongodb.net/ecommerce?retryWrites=true&w=majority"),
+    ConfigModule.forRoot({
+      envFilePath: `env/.env.${process.env.NODE_ENV}`,
+      isGlobal: true
+    }),
+    MongooseModule.forRoot(process.env.MONGO_DB),
     ProductosModule,
     InfoModule,
     UsuariosModule,
     AuthModule,
     MensajesModule,
-    ComprasModule
+    ComprasModule,
+    AlertasModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    AlertasService,
+    {
+      provide: APP_FILTER,
+      useClass: NotFoundExceptionFilter
+    }
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -30,9 +46,5 @@ export class AppModule implements NestModule {
       .apply(AuthMiddleware)
       .exclude("/login", "/signup")
       .forRoutes('*')
-
-      .apply(AppMidleware)
-      .exclude("/login", "/home", "/info", "/logout", "/signup", "/signup-error", "/productos", "/compras")
-      .forRoutes("*")
   }
 }
