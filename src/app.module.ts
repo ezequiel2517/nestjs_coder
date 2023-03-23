@@ -18,7 +18,7 @@ import { NotFoundExceptionFilter } from 'src/app.exceptions';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `env/.env.${process.env.NODE_ENV}`,
+      envFilePath: `src/env/.env.${process.env.NODE_ENV}`,
       isGlobal: true
     }),
     MongooseModule.forRoot(process.env.MONGO_DB),
