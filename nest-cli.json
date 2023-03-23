@@ -5,13 +5,8 @@
   "compilerOptions": {
     "assets": [
       {
-        "include": "../env",
-        "outDir": "dist/env",
-        "watchAssets": true
-      },
-      {
-        "include": "../public",
-        "outDir": "dist/public",
+        "include": "env",
+        "outDir": "dist",
         "watchAssets": true
       }
     ]

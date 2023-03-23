@@ -14,11 +14,12 @@ import { AlertasModule } from './alertas/alertas.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { NotFoundExceptionFilter } from 'src/app.exceptions';
+import { join } from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `env/.env.${process.env.NODE_ENV}`,
+      envFilePath: join(__dirname, `env/.env.${process.env.NODE_ENV}`),
       isGlobal: true
     }),
     MongooseModule.forRoot(process.env.MONGO_DB),
