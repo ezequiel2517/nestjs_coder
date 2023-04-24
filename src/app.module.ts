@@ -19,7 +19,8 @@ import { join } from 'path';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: join(__dirname, `env/.env.${process.env.NODE_ENV}`),
+      // envFilePath: join(__dirname, `env/.env.${process.env.NODE_ENV}`),
+      envFilePath: join(__dirname, `env/.env.dev`),
       isGlobal: true
     }),
     MongooseModule.forRoot(process.env.MONGO_DB),
